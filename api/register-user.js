@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
-// ⚠️ These must be set as Environment Variables in Vercel
+// ⚠️ تأكد أن المتغيرات موجودة في Vercel Environment Variables
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
@@ -18,9 +18,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Check if user already exists
+    // تحقق إذا المستخدم موجود بالفعل في جدول Users
     const { data, error } = await supabase
-      .from('users')
+      .from('Users')  // ← تم تعديل الاسم ليناسب جدولك
       .select('*')
       .eq('telegram_id', telegram_id)
       .single();
@@ -30,9 +30,9 @@ export default async function handler(req, res) {
     }
 
     if (!data) {
-      // User does not exist → insert
+      // المستخدم غير موجود → أضفه
       const { error: insertError } = await supabase
-        .from('Users')
+        .from('Users')  // ← تم تعديل الاسم هنا أيضًا
         .insert([
           {
             telegram_id,
