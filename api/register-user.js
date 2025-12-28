@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     if (!data) {
       // User does not exist → insert
       const { error: insertError } = await supabase
-        .from('users')
+        .from('Users')
         .insert([
           {
             telegram_id,
